@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDate;
 
+// Entity som representerar en bokning i databasen
 @Entity
 @Getter
 @Setter
@@ -16,9 +16,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // En bokning måste alltid kopplas till en kund
     @ManyToOne(optional = false)
     private Customer customer;
 
+    // En bokning måste alltid kopplas till ett rum
     @ManyToOne(optional = false)
     private Room room;
 

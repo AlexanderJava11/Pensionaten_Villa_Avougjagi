@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+// Entity som representerar en kund/gäst i databasen
 @Entity
 @Data
 @NoArgsConstructor
@@ -27,6 +28,7 @@ public class Customer {
     @Email
     private String email;
 
+    // Validerar att telefonnumret följer ett rimligt format
     @Pattern(regexp = "^\\+?[0-9]{1,4}?[ .-]?[0-9]{6,12}$")
     private String phone;
 }

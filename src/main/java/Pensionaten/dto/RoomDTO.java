@@ -3,6 +3,7 @@ package Pensionaten.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+// DTO som används för att hantera rumsdata i formulär och vyer
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,5 +25,6 @@ public class RoomDTO {
     @Min(value = 0, message = "Pris per natt kan inte vara negativt")
     private int pricePerNight;
 
+    // Visas i gränssnittet och räknas ut från rumstyp + extrasängar
     private int capacity;
 }

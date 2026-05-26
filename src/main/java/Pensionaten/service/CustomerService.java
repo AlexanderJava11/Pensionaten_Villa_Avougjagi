@@ -6,7 +6,6 @@ import Pensionaten.repositories.BookingRepository;
 import Pensionaten.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

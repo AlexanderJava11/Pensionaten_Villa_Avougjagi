@@ -7,10 +7,10 @@ import Pensionaten.repositories.BookingRepository;
 import Pensionaten.repositories.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
+// Serviceklass som hanterar rum, kapacitet och sökning av lediga rum
 @Service
 @RequiredArgsConstructor
 public class RoomService {
@@ -18,6 +18,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final BookingRepository bookingRepository;
 
+    // Hämtar alla rum och gör om dem till DTO
     public List<RoomDTO> findAll() {
         return roomRepository.findAll()
                 .stream()
@@ -25,17 +26,20 @@ public class RoomService {
                 .toList();
     }
 
+    // Hämtar ett rum baserat på id
     public RoomDTO findById(Long id) {
         return roomRepository.findById(id)
                 .map(this::toDTO)
                 .orElseThrow(() -> new RuntimeException("Rummet finns inte"));
     }
 
+    // Sparar nytt rum eller uppdaterar befintligt rum
     public RoomDTO save(RoomDTO dto) {
         Room savedRoom = roomRepository.save(toEntity(dto));
         return toDTO(savedRoom);
     }
 
+    // Tar bort rum endast om rummet inte har bokningar
     public boolean delete(Long id) {
         if (!roomRepository.existsById(id)) {
             return false;
@@ -47,10 +51,7 @@ public class RoomService {
         return true;
     }
 
-    public List<RoomDTO> findAvailableRooms(LocalDate checkIn, LocalDate checkOut, int guests) {
-        return findAvailableRooms(checkIn, checkOut, guests, null);
-    }
-
+    // Söker lediga rum baserat på datum och antal gäster
     public List<RoomDTO> findAvailableRooms(LocalDate checkIn, LocalDate checkOut, int guests, Long bookingId) {
         if (checkIn == null || checkOut == null || !checkOut.isAfter(checkIn) || guests < 1) {
             return List.of();
@@ -64,6 +65,7 @@ public class RoomService {
                 .toList();
     }
 
+    // Kontrollerar om ett specifikt rum finns bland de lediga rummen
     public boolean isRoomAvailable(Long roomId,
                                    LocalDate checkIn,
                                    LocalDate checkOut,

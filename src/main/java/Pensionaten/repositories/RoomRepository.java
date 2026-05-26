@@ -4,12 +4,13 @@ import Pensionaten.models.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import java.time.LocalDate;
 import java.util.List;
 
+// Repository för rum och sökning av lediga rum
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
+    // Hämtar rum som inte har överlappande bokningar under valt datumintervall
     @Query("""
         SELECT r FROM Room r
         WHERE :guests > 0

@@ -7,10 +7,10 @@ import Pensionaten.repositories.CustomerRepository;
 import Pensionaten.repositories.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+// Serviceklass som innehåller affärslogik för bokningar.
 @Service
 @RequiredArgsConstructor
 public class BookingService {
@@ -20,6 +20,7 @@ public class BookingService {
     private final RoomRepository roomRepository;
     private final RoomService roomService;
 
+    // Hämtar alla bokningar och gör om dem från Entity till DTO
     public List<BookingDTO> findAll() {
         return bookingRepository.findAll()
                 .stream()
@@ -27,21 +28,25 @@ public class BookingService {
                 .toList();
     }
 
+    // Hämtar en specifik bokning på id
     public BookingDTO findById(Long id) {
         return bookingRepository.findById(id)
                 .map(this::toDTO)
                 .orElse(null);
     }
 
+    // Sparar en ny bokning eller uppdaterar en befintlig bokning
     public boolean saveBooking(BookingDTO dto) {
         if (dto.getCheckInDate() == null || dto.getCheckOutDate() == null) {
             return false;
         }
 
+        // Utcheckningsdatum måste vara efter incheckningsdatum
         if (!dto.getCheckOutDate().isAfter(dto.getCheckInDate())) {
             return false;
         }
 
+        // Kontrollerar om valt rum är ledigt och har rätt kapacitet
         boolean available = roomService.isRoomAvailable(
                 dto.getRoomId(),
                 dto.getCheckInDate(),
@@ -54,6 +59,7 @@ public class BookingService {
             return false;
         }
 
+        // OM dto har id ändras en befintlig bokning, annars skapas en ny
         Booking booking = dto.getId() != null
                 ? bookingRepository.findById(dto.getId()).orElse(new Booking())
                 : new Booking();
@@ -68,6 +74,7 @@ public class BookingService {
         return true;
     }
 
+    // Tar bort en bokning om den finns
     public boolean deleteById(Long id) {
         if (!bookingRepository.existsById(id)) {
             return false;
@@ -77,6 +84,7 @@ public class BookingService {
         return true;
     }
 
+    // Gör om Booking Entity till BookingDTO som används i controller och vyer
     private BookingDTO toDTO(Booking booking) {
         BookingDTO dto = new BookingDTO();
 
@@ -95,6 +103,7 @@ public class BookingService {
         dto.setCheckOutDate(booking.getCheckOutDate());
         dto.setNumberOfGuests(booking.getNumberOfGuests());
 
+        // Räknar ut antal nätter och totalpris för bokningen
         long nights = ChronoUnit.DAYS.between(booking.getCheckInDate(), booking.getCheckOutDate());
         dto.setNights(nights);
         dto.setTotalPrice((int) nights * booking.getRoom().getPricePerNight());

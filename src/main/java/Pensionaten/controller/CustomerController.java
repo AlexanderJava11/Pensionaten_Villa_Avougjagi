@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+// Controller som hanterar kunder/gäster
 @Controller
 @RequestMapping("/customers")
 @RequiredArgsConstructor
@@ -20,18 +21,21 @@ public class CustomerController {
     private final CustomerService customerService;
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
+    // Visar alla registrerade kunder
     @GetMapping
     public String listCustomers(Model model) {
         model.addAttribute("customers", customerService.findAll());
         return "customers/list";
     }
 
+    // Öppnar formuläret för att skapa en ny kund
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("customer", new CustomerDTO());
         return "customers/form";
     }
 
+    // Sparar en ny kund eller uppdaterar en befintlig kund
     @PostMapping("/save")
     public String saveCustomer(@Valid @ModelAttribute("customer") CustomerDTO customerDTO,
                                BindingResult result) {
@@ -44,6 +48,7 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
+    // Öppnar formuläret med en befintlig kund för redigering
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         CustomerDTO customer = customerService.findById(id);
@@ -56,6 +61,7 @@ public class CustomerController {
         return "customers/form";
     }
 
+    // Tar bort en kund om kunden inte har några bokningar
     @GetMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable Long id, RedirectAttributes redirect) {
         boolean success = customerService.delete(id);
