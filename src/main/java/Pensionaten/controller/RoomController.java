@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequestMapping("/rooms")
@@ -52,8 +54,15 @@ public class RoomController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteRoom(@PathVariable Long id) {
-        roomService.delete(id);
+    public String deleteRoom(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        boolean deleted = roomService.delete(id);
+
+        if (deleted) {
+            redirectAttributes.addFlashAttribute("message", "Rummet togs bort.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Rummet kunde inte tas bort eftersom det har bokningar.");
+        }
+
         return "redirect:/rooms";
     }
 }

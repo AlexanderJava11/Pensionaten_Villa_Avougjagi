@@ -3,6 +3,7 @@ package Pensionaten.service;
 import Pensionaten.dto.RoomDTO;
 import Pensionaten.models.Room;
 import Pensionaten.models.RoomType;
+import Pensionaten.repositories.BookingRepository;
 import Pensionaten.repositories.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final BookingRepository bookingRepository;
 
     public List<RoomDTO> findAll() {
         return roomRepository.findAll()
@@ -34,8 +36,15 @@ public class RoomService {
         return toDTO(savedRoom);
     }
 
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        if (!roomRepository.existsById(id)) {
+            return false;
+        }
+        if (bookingRepository.existsByRoomId(id)) {
+            return false;
+        }
         roomRepository.deleteById(id);
+        return true;
     }
 
     public List<RoomDTO> findAvailableRooms(LocalDate checkIn, LocalDate checkOut, int guests) {
