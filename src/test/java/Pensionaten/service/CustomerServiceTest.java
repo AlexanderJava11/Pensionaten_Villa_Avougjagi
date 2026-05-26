@@ -2,8 +2,8 @@ package Pensionaten.service;
 
 import Pensionaten.dto.CustomerDTO;
 import Pensionaten.models.Customer;
-import Pensionaten.repositoires.BookingRepository;
-import Pensionaten.repositoires.CustomerRepository;
+import Pensionaten.repositories.BookingRepository;
+import Pensionaten.repositories.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

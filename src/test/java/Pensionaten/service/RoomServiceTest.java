@@ -3,7 +3,7 @@ package Pensionaten.service;
 import Pensionaten.dto.RoomDTO;
 import Pensionaten.models.Room;
 import Pensionaten.models.RoomType;
-import Pensionaten.repositoires.RoomRepository;
+import Pensionaten.repositories.RoomRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

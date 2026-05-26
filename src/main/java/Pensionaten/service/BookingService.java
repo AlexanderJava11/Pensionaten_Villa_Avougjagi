@@ -2,9 +2,9 @@ package Pensionaten.service;
 
 import Pensionaten.dto.BookingDTO;
 import Pensionaten.models.Booking;
-import Pensionaten.repositoires.BookingRepository;
-import Pensionaten.repositoires.CustomerRepository;
-import Pensionaten.repositoires.RoomRepository;
+import Pensionaten.repositories.BookingRepository;
+import Pensionaten.repositories.CustomerRepository;
+import Pensionaten.repositories.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

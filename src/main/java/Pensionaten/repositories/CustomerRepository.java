@@ -1,4 +1,4 @@
-package Pensionaten.repositoires;
+package Pensionaten.repositories;
 
 import Pensionaten.models.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
