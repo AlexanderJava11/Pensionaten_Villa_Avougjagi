@@ -7,23 +7,26 @@ Projektet använder **Spring MVC**, **Spring Data JPA**, **Thymeleaf**, **MySQL/
 
 # ✨ Funktioner
 
-## 👤 Kunder
-- Skapa, lista, uppdatera och ta bort kunder
+## 👤 Gästhantering
+- Skapa, visa, uppdatera och ta bort gäster
 - Validering av:
   - namn
   - e-post
   - telefonnummer
-- Kunder med aktiva bokningar kan inte raderas
+- Gäster med bokningar kan inte tas bort
+- Skydd mot ogiltiga URL:er och felaktiga ID:n
 
 ---
 
-## 🛏️ Rum
+## 🛏️ Rumshantering
 - Skapa och hantera rum
 - Enkelrum och dubbelrum
-- Extrasängar
+- Extrasängar för dubbelrum
 - Pris per natt
-- Automatisk kapacitetsberäkningar
+- Automatisk kapacitetsberäkning
+- Detaljsida för varje rum
 - Rum med bokningar kan inte tas bort
+- Skydd mot dubbla rumsnummer
 
 ---
 
@@ -31,20 +34,26 @@ Projektet använder **Spring MVC**, **Spring Data JPA**, **Thymeleaf**, **MySQL/
 - Skapa bokningar
 - Ändra bokningar
 - Avboka bokningar
-- Kontroll mot dubbelbokningar
-- Kontroll att:
-  - utcheckning är efter incheckning
-  - rum har rätt kapacitet
-  - obligatoriska fält är ifyllda
+- Automatisk kontroll av:
+  - dubbelbokningar
+  - datumintervall
+  - kapacitet
+  - antal gäster
+- Samma kund kan inte boka flera vistelser under samma datum
+- Automatisk prisberäkning för vistelser
  
 ---
 
-## 🎨 Frontend
-- Responsiv hotell design
+## 🎨 Frontend & Design
+
+Projektet använder en modern hotellinspirerad design med:
+- responsiv layout
 - Thymeleaf templates
-- Modern hero-section
+- modern hero-section
+- loading-animationer
 - JavaScript confirmation innan borttagning
-- Anpassad CSS design
+- egen CSS-design
+- hotellinspirerat UI
 
 ---
 
@@ -52,14 +61,30 @@ Projektet använder **Spring MVC**, **Spring Data JPA**, **Thymeleaf**, **MySQL/
 
 Funktioner som implementerades utöver grundkraven:
 
-- Dynamisk sökning av rum
-- Kapacitetskontroll för antal gäster
+- Dynamisk sökning av lediga rum
+- Kapacitetskontroll för gäster
 - Extrasängar för dubbelrum
-- Flash meddelanden vid CRUD-operationer
+- Flash-meddelanden vid CRUD-operationer
 - JavaScript confirmation vid borttagning
-- DTO lager mellan frontend och backend
+- DTO-lager mellan frontend och backend
 - Tester med JUnit 5 och Mockito
-- Code First struktur med entities först
+- Code First-struktur
+- Felhantering för att undvika Whitelabel Errors
+- Skydd mot ogiltiga URL:er
+- Detaljsidor för rum
+
+---
+
+# 🛡️ Felhantering
+
+Projektet innehåller flera skydd för att förhindra systemfel och ogiltig data.
+
+### Exempel:
+- Rum med bokningar kan inte tas bort
+- Gäster med bokningar kan inte tas bort
+- Dubbla rumsnummer stoppas automatiskt
+- Samma kund kan inte boka överlappande datum
+- Ogiltiga URL:er skickar tillbaka användaren istället för att visa Whitelabel Error Page
 
 ---
 
@@ -261,6 +286,6 @@ Målet med projektet var att bygga ett realistiskt pensionat och bokningssytem m
 - bokningslogik
 - modern frontend design
 
-Projektet utvecklades med Code First principen där entities och databasen först innan resterande lager implementerades.
+Projektet utvecklades enligt Code First-principen där entities och databasen designades innan resterande lager implementerades.
 
 ---
