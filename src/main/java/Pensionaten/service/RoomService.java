@@ -59,7 +59,7 @@ public class RoomService {
 
         return roomRepository.findAvailableRooms(checkIn, checkOut, guests, bookingId)
                 .stream()
-                // The repository checks date conflicts. The service keeps the business rule for capacity.
+                // Kontrollerar datumkonflikter och behåller affärslogiken för kapacitet
                 .filter(room -> room.getCapacity() >= guests)
                 .map(this::toDTO)
                 .toList();
