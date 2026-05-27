@@ -35,12 +35,19 @@ public class RoomService {
 
     // Sparar nytt rum eller uppdaterar befintligt rum
     public RoomDTO save(RoomDTO dto) {
-        boolean roomNumberExists = roomRepository.existsByRoomNumber(dto.getRoomNumber());
+       boolean roomNumberTaken;
 
-        if (roomNumberExists && dto.getId() == null) {
+       // Om rummet är nytt kontrolleras om rumsnumret redan finns
+        if (dto.getId() == null) {
+            roomNumberTaken = roomRepository.existsByRoomNumber(dto.getRoomNumber());
+        } else {
+            // Vid redigering kontrolleras att inget annat rum har samma rumsnummer
+            roomNumberTaken = roomRepository.existsByRoomNumberAndIdNot(dto.getRoomNumber(), dto.getId());
+        }
+        // Stoppar sparningen om rumsnumret redan används
+        if (roomNumberTaken) {
             return null;
         }
-
         Room savedRoom = roomRepository.save(toEntity(dto));
         return toDTO(savedRoom);
     }

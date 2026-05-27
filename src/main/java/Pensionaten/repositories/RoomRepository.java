@@ -12,6 +12,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     boolean existsByRoomNumber(String roomNumber);
 
+    boolean existsByRoomNumberAndIdNot(String roomNumber, Long id);
+
     // Hämtar rum som inte har överlappande bokningar under valt datumintervall
     @Query("""
         SELECT r FROM Room r

@@ -39,20 +39,21 @@ public class RoomController {
     public String saveRoom(@Valid @ModelAttribute("room") RoomDTO roomDTO,
                            BindingResult result,
                            Model model) {
-
+        // Kontrollerar om formuläret innehåller valideringsfel
         if (result.hasErrors()) {
             model.addAttribute("roomTypes", RoomType.values());
             return "customers/room/form";
         }
-
+        // Försöker spara rummet
         RoomDTO savedRoom = roomService.save(roomDTO);
 
+        // Visar fel om rumsnumret redan finns
         if (savedRoom == null) {
             model.addAttribute("roomTypes", RoomType.values());
-            model.addAttribute("error", "Rumsnumret finns redan. Välj ett annat rumsnummer.");
+            model.addAttribute("error", "Rumsnumret finns redan");
             return "customers/room/form";
         }
-        return "redirect:/rooms";
+        return "redirect:/rooms/";
     }
 
     // Öppnar formuläret med ett befintligt rum för redigering
