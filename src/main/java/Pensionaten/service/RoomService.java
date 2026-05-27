@@ -30,7 +30,7 @@ public class RoomService {
     public RoomDTO findById(Long id) {
         return roomRepository.findById(id)
                 .map(this::toDTO)
-                .orElseThrow(() -> new RuntimeException("Rummet finns inte"));
+                .orElse(null);
     }
 
     // Sparar nytt rum eller uppdaterar befintligt rum

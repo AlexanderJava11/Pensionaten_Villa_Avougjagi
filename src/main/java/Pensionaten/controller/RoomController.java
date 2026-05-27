@@ -56,10 +56,17 @@ public class RoomController {
         return "redirect:/rooms/";
     }
 
-    // Öppnar formuläret med ett befintligt rum för redigering
+    // Öppnar formuläret för att redigera ett befintligt rum
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("room", roomService.findById(id));
+        // Hämtar rummet baserat på id
+        RoomDTO room = roomService.findById(id);
+        // Skickar tillbaka användaren om rummet inte finns
+        if (room == null) {
+            return "redirect:/rooms";
+        }
+        // Skickar data till formuläret
+        model.addAttribute("room", room);
         model.addAttribute("roomTypes", RoomType.values());
         return "customers/room/form";
     }

@@ -33,13 +33,20 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    // Tar bort en kund om kunden finns och inte har bokningar
     public boolean delete(Long id) {
+        // kontrollerar att kunden finns
+        if (!customerRepository.existsById(id)) {
+            return false;
+        }
+        // Stoppar borttagning om kunden har bokningar
         if (bookingRepository.existsByCustomerId(id)) {
             return false;
         }
-
+        // Tar bort kunden från databasen
         customerRepository.deleteById(id);
         return true;
+
     }
 
     private CustomerDTO toDTO(Customer customer) {
