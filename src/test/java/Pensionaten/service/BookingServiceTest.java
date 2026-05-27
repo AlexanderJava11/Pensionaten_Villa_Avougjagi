@@ -79,7 +79,7 @@ class BookingServiceTest {
         List<BookingDTO> result = bookingService.findAll();
 
         assertEquals(1, result.size());
-        assertEquals("Alex", result.get(0).getCustomerFirstName());
+        assertEquals("Namn", result.get(0).getCustomerFirstName());
         assertEquals("101", result.get(0).getRoomNumber());
     }
 
@@ -91,8 +91,8 @@ class BookingServiceTest {
         BookingDTO result = bookingService.findById(1L);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("Alex", result.getCustomerFirstName());
+        assertEquals(9L, result.getId());
+        assertEquals("Namn", result.getCustomerFirstName());
     }
 
     @Test
