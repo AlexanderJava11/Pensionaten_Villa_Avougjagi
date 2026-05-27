@@ -35,6 +35,12 @@ public class RoomService {
 
     // Sparar nytt rum eller uppdaterar befintligt rum
     public RoomDTO save(RoomDTO dto) {
+        boolean roomNumberExists = roomRepository.existsByRoomNumber(dto.getRoomNumber());
+
+        if (roomNumberExists && dto.getId() == null) {
+            return null;
+        }
+
         Room savedRoom = roomRepository.save(toEntity(dto));
         return toDTO(savedRoom);
     }

@@ -40,6 +40,13 @@
     </section>
 
     <section class="card-lux form-card">
+
+        <!-- Visar fel om rumsnumret redan finns -->
+        <div class="alert-lux alert-error"
+             th:if="${error}"
+             th:text="${error}">
+        </div>
+
         <form th:action="@{/rooms/save}" th:object="${room}" method="post">
 
             <input type="hidden" th:field="*{id}">

@@ -45,7 +45,13 @@ public class RoomController {
             return "customers/room/form";
         }
 
-        roomService.save(roomDTO);
+        RoomDTO savedRoom = roomService.save(roomDTO);
+
+        if (savedRoom == null) {
+            model.addAttribute("roomTypes", RoomType.values());
+            model.addAttribute("error", "Rumsnumret finns redan. Välj ett annat rumsnummer.");
+            return "customers/room/form";
+        }
         return "redirect:/rooms";
     }
 
