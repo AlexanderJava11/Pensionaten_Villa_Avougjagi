@@ -97,7 +97,7 @@ body.hotel-body {
 .kicker {
     color: var(--gold);
     font-family: Arial, sans-serif;
-    font-size: 0.82rem;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.24em;
     text-transform: uppercase;
