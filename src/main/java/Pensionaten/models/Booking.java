@@ -18,10 +18,12 @@ public class Booking {
 
     // En bokning måste alltid kopplas till en kund
     @ManyToOne(optional = false)
+    @JoinColumn //FK
     private Customer customer;
 
     // En bokning måste alltid kopplas till ett rum
     @ManyToOne(optional = false)
+    @JoinColumn
     private Room room;
 
     @NotNull
