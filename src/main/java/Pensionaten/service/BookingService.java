@@ -35,18 +35,31 @@ public class BookingService {
                 .orElse(null);
     }
 
-    // Sparar en ny bokning eller uppdaterar en befintlig bokning
     public boolean saveBooking(BookingDTO dto) {
+        if (dto.getCustomerId() == null || dto.getRoomId() == null) {
+            return false;
+        }
+
         if (dto.getCheckInDate() == null || dto.getCheckOutDate() == null) {
             return false;
         }
 
-        // Utcheckningsdatum måste vara efter incheckningsdatum
         if (!dto.getCheckOutDate().isAfter(dto.getCheckInDate())) {
             return false;
         }
 
-        // Kontrollerar om valt rum är ledigt och har rätt kapacitet
+        // Stoppar kunden från att boka flera vistelser under samma datum
+        boolean customerConflict = bookingRepository.existsCustomerBookingConflict(
+                dto.getCustomerId(),
+                dto.getCheckInDate(),
+                dto.getCheckOutDate(),
+                dto.getId()
+        );
+
+        if (customerConflict) {
+            return false;
+        }
+
         boolean available = roomService.isRoomAvailable(
                 dto.getRoomId(),
                 dto.getCheckInDate(),
@@ -59,7 +72,6 @@ public class BookingService {
             return false;
         }
 
-        // OM dto har id ändras en befintlig bokning, annars skapas en ny
         Booking booking = dto.getId() != null
                 ? bookingRepository.findById(dto.getId()).orElse(new Booking())
                 : new Booking();

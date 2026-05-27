@@ -79,7 +79,7 @@ public class BookingController {
         boolean success = bookingService.saveBooking(bookingDTO);
 
         if (!success) {
-            model.addAttribute("error", "Bokningen kunde inte sparas. Kontrollera datum, rum och antal personer.");
+            model.addAttribute("error", "Bokningen kunde inte sparas. Gästen har redan en bokning under dessa datum eller så är rummet upptaget");
             model.addAttribute("customers", customerService.findAll());
             model.addAttribute("rooms", roomService.findAvailableRooms(
                     bookingDTO.getCheckInDate(),
