@@ -41,7 +41,7 @@
     <div class="hero-content">
 
         <div class="kicker">
-            Boutique pensionat • Stockholm
+            Pensionat • Stockholm
         </div>
 
         <h1>
@@ -54,19 +54,23 @@
         </p>
 
         <!-- Knappar -->
-        <div class="actions hero-actions">
+        <a class="actions hero-actions">
 
-            <a class="btn-luxury"
+            <a class="btn-luxury hero-btn"
                th:href="@{/bookings/new}">
-                Sök lediga rum
+
+                <span class="btn-icon">⌂</span>
+                <span>Sök lediga rum></span>
             </a>
 
-            <a class="btn-outline-luxury"
+            <a class="btn-outline-luxury hero-btn-outline"
                th:href="@{/rooms}">
-                Se våra rum
+
+                <span class="btn-icon">🛏</span>
+                <span>Se våra rum</span>
             </a>
 
-        </div>
+        </a>
     </div>
 </section>
 
