@@ -36,14 +36,18 @@ public class BookingService {
     }
 
     public boolean saveBooking(BookingDTO dto) {
+
+        // Kontrollerar att kund och rum är valda
         if (dto.getCustomerId() == null || dto.getRoomId() == null) {
             return false;
         }
 
+        // Kontrollerar att datum är ifyllda
         if (dto.getCheckInDate() == null || dto.getCheckOutDate() == null) {
             return false;
         }
 
+        // Kontrollerar att utcheckning är efter incheckning
         if (!dto.getCheckOutDate().isAfter(dto.getCheckInDate())) {
             return false;
         }
@@ -56,10 +60,12 @@ public class BookingService {
                 dto.getId()
         );
 
+        // Returnerar false om kunden redan har en bokning
         if (customerConflict) {
             return false;
         }
 
+        // Kontrollerar att rummet är ledigt och inte dubbelbokat
         boolean available = roomService.isRoomAvailable(
                 dto.getRoomId(),
                 dto.getCheckInDate(),

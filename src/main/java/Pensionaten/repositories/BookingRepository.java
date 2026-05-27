@@ -16,6 +16,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     // Används för att kontrollera om ett rum har bokningar innan rummet tas bort
     boolean existsByRoomId(Long roomId);
 
+    // Kontrollerar om kunden redan har en bokning som överlappar med de valda datumen
     @Query("""
         SELECT COUNT (b) > 0
         FROM Booking b
