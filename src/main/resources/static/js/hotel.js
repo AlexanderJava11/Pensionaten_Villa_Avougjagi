@@ -1,4 +1,4 @@
-// Vöntar tills hela HTML sidan har laddats klart
+// Väntar tills hela HTML sidan har laddats klart
 document.addEventListener("DOMContentLoaded", function () {
 
   // Hämtar alla länkar som har attributet data confirm
